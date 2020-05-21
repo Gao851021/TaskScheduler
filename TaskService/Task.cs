@@ -2013,7 +2013,7 @@ namespace Microsoft.Win32.TaskScheduler
 			Dictionary<string, string> dict;
 			var o = GetV1TaskData(v1Task);
 			if (o is string)
-				dict = new Dictionary<string, string> { { "Data", o.ToString() }, { "Documentation", o.ToString() } };
+				dict = new Dictionary<string, string>(2) { { "Data", o.ToString() }, { "Documentation", o.ToString() } };
 			else
 				dict = o as Dictionary<string, string>;
 			return dict ?? new Dictionary<string, string>();
@@ -2199,7 +2199,7 @@ namespace Microsoft.Win32.TaskScheduler
 		{
 			xmlFunc = defXml;
 			v2Principal = iPrincipal;
-			try { v2Principal2 = (IPrincipal2)v2Principal; }
+			try { if (Environment.OSVersion.Version >= new Version(6, 1)) v2Principal2 = (IPrincipal2)v2Principal; }
 			catch { }
 		}
 
@@ -2917,9 +2917,9 @@ namespace Microsoft.Win32.TaskScheduler
 		internal TaskSettings([NotNull] ITaskSettings iSettings)
 		{
 			v2Settings = iSettings;
-			try { v2Settings2 = (ITaskSettings2)v2Settings; }
+			try { if (Environment.OSVersion.Version >= new Version(6, 1)) v2Settings2 = (ITaskSettings2)v2Settings; }
 			catch { }
-			try { v2Settings3 = (ITaskSettings3)v2Settings; }
+			try { if (Environment.OSVersion.Version >= new Version(6, 2)) v2Settings3 = (ITaskSettings3)v2Settings; }
 			catch { }
 		}
 
